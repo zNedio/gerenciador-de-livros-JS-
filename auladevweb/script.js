@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.textContent = 'Salvar';
     });
     
-    // Renderiza a lista de livros
+
     function renderBooks() {
         booksList.innerHTML = '';
         
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             booksList.appendChild(row);
         });
         
-        // Adiciona eventos aos botões de editar e remover
+
         document.querySelectorAll('.edit-btn').forEach(btn => {
             btn.addEventListener('click', handleEdit);
         });
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Adiciona um novo livro ou atualiza um existente
+
     bookForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const id = bookIdInput.value || Date.now().toString();
         
         if (editingId) {
-            // Atualiza o livro existente
+
             books = books.map(book => 
                 book.id === editingId ? { id, title, author, year, pages } : book
             );
@@ -65,20 +65,17 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'Salvar';
             cancelBtn.style.display = 'inline-block';
         } else {
-            // Adiciona um novo livro
+
             books.push({ id, title, author, year, pages });
         }
         
-        // Salva no localStorage e renderiza a lista
         localStorage.setItem('books', JSON.stringify(books));
         renderBooks();
         
-        // Limpa o formulário
         bookForm.reset();
         bookIdInput.value = '';
     });
     
-    // Cancela a edição
     cancelBtn.addEventListener('click', function() {
         bookForm.reset();
         bookIdInput.value = '';
@@ -87,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
         cancelBtn.style.display = 'inline-block';
     });
     
-    // Edita um livro
     function handleEdit(e) {
         const id = e.target.getAttribute('data-id');
         const book = books.find(book => book.id === id);
@@ -105,7 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Remove um livro
     function handleDelete(e) {
         const id = e.target.getAttribute('data-id');
         
@@ -114,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('books', JSON.stringify(books));
             renderBooks();
             
-            // Se estava editando o livro removido, cancela a edição
             if (editingId === id) {
                 bookForm.reset();
                 bookIdInput.value = '';
@@ -125,6 +119,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Renderiza os livros ao carregar a página
     renderBooks();
 });
